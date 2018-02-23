@@ -1,5 +1,5 @@
 # AlphaCommerceHubOpencart.ocmod
-AlphaCommerceHub integration with Woccommerce
+AlphaCommerceHub integration with OpenCart
 ## [Demo videos]
 1. [Capture a PayPal payment](https://youtu.be/zymChBth6Bs)
 2. [Capture a bank card payment with the **3D Secure** validation](https://youtu.be/L12SDQIcK_c)
