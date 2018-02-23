@@ -1,0 +1,10 @@
+{
+    "require": {
+        "mundipagg/mundiapi": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Mundipagg\\": "src/"
+        }
+    }
+}
