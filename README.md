@@ -8,7 +8,7 @@ AlphaCommerceHub integration with OpenCart
 
 ## How to install
 
-### 1. Free installation service
+### Extension installer
 - Download the Github plugin zip file and extract it.
 - Compress the upload folder to a ZIP file.
 - Rename the file extension from .zip to .ocmod.zip.
