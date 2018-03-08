@@ -9,11 +9,9 @@ AlphaCommerceHub integration with OpenCart
 ## How to install
 
 ### 1. Free installation service
-- Download the Github plugin zip file.
-- Rename downloaded file name.
-- Remove "-master" suffix from downloaded file.
-- Login to your Opencart Admin. Click on Extensions -> Installer.
-- Click on the “Upload” option, then click “Choose File” to select the renamed zip file from your computer. Once selected, press “OK”.
-- Now Click on Extensions -> Extensions, and select "Payments" from "Choose the extension type". 
-- Install "alpha Payment Gateway Services" , "Alpha Paypal Payments Standard".
-- Edit Alpha Commerce Hub Gateway settings.
+- Download the Github plugin zip file and extract it.
+- Compress the upload folder to a ZIP file.
+- Rename the file extension from .zip to .ocmod.zip.
+- Open the Extension Installer in your OpenCart backend.
+- Upload the zipped directory using the Extension Installer.
+- The plugin will now be visible in your Extensions under Payment. You can install the plugin directly from here. After the plugin is installed, you can open the configuration.
