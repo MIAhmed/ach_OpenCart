@@ -265,6 +265,17 @@ class ControllerExtensionPaymentAlphacardPGS extends Controller {
         } else {
             $data['payment_alphacard_pgs_declined_payment_plan_order_status_id'] = $this->config->get('payment_alphacard_pgs_declined_payment_plan_order_status_id');
         }
+        if (isset($this->request->post['payment_alphacard_pgs_user'])) {
+            $data['payment_alphacard_pgs_user'] = $this->request->post['payment_alphacard_pgs_user'];
+        } else {
+            $data['payment_alphacard_pgs_user'] = $this->config->get('payment_alphacard_pgs_user');
+        }
+        
+        if (isset($this->request->post['payment_alphacard_pgs_url'])) {
+            $data['payment_alphacard_pgs_url'] = $this->request->post['payment_alphacard_pgs_url'];
+        } else {
+            $data['payment_alphacard_pgs_url'] = $this->config->get('payment_alphacard_pgs_url');
+        }
 
         if (isset($this->request->post['payment_alphacard_pgs_approved_pending_settlement_order_status_id'])) {
             $data['payment_alphacard_pgs_approved_pending_settlement_order_status_id'] = $this->request->post['payment_alphacard_pgs_approved_pending_settlement_order_status_id'];
