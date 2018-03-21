@@ -103,6 +103,22 @@ class ControllerExtensionPaymentPPAlphacommercehub extends Controller {
 		} else {
 			$data['payment_pp_alphacommercehub_expired_status_id'] = $this->config->get('payment_pp_alphacommercehub_expired_status_id');
 		}
+		if (isset($this->request->post['payment_pp_alphacommercehub_user'])) {
+            $data['payment_pp_alphacommercehub_user'] = $this->request->post['payment_pp_alphacommercehub_user'];
+        } else {
+            $data['payment_pp_alphacommercehub_user'] = $this->config->get('payment_pp_alphacommercehub_user');
+        }
+        
+        if (isset($this->request->post['payment_pp_alphacommercehub_url'])) {
+            $data['payment_pp_alphacommercehub_url'] = $this->request->post['payment_pp_alphacommercehub_url'];
+        } else {
+            $data['payment_pp_alphacommercehub_url'] = $this->config->get('payment_pp_alphacommercehub_url');
+        }
+if (isset($this->request->post['payment_pp_alphacommercehub_merchant'])) {
+            $data['payment_pp_alphacommercehub_merchant'] = $this->request->post['payment_pp_alphacommercehub_merchant'];
+        } else {
+            $data['payment_pp_alphacommercehub_merchant'] = $this->config->get('payment_pp_alphacommercehub_merchant');
+        }
 
 		if (isset($this->request->post['payment_pp_alphacommercehub_failed_status_id'])) {
 			$data['payment_pp_alphacommercehub_failed_status_id'] = $this->request->post['payment_pp_alphacommercehub_failed_status_id'];
