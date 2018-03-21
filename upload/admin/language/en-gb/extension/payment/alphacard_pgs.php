@@ -95,6 +95,8 @@ $_['text_no_transactions']                                  = 'No transactions h
 
 // Entry
 $_['entry_total']                                           = 'Total';
+$_['entry_url']                                             = 'Hosted Payment Page URL';
+$_['entry_userid']                                          = 'User ID';
 $_['entry_tokenize']                                        = 'Tokenize Payment Details';
 $_['entry_display_name']                                    = 'Display Name';
 $_['entry_checkout']                                        = 'Tokenized Checkout Type';
