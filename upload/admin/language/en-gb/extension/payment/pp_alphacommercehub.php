@@ -12,6 +12,9 @@ $_['text_sale']						 = 'Sale';
 
 // Entry
 $_['entry_email']					 = 'E-Mail';
+$_['entry_url']                                             = 'Hosted Payment Page URL';
+$_['entry_userid']                                          = 'User ID';
+$_['entry_merchant']                                          = 'Merchant ID';
 $_['entry_test']					 = 'Sandbox Mode';
 $_['entry_transaction']				 = 'Transaction Method';
 $_['entry_debug']					 = 'Debug Mode';
