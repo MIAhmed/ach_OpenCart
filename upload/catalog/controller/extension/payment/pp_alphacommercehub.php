@@ -8,16 +8,19 @@ class ControllerExtensionPaymentPPAlphacommercehub extends Controller {
 
 		$data['testmode'] = $this->config->get('payment_pp_alphacommercehub_test');
 
-		if (!$this->config->get('payment_pp_alphacommercehub_test')) {
+		/*if (!$this->config->get('payment_pp_alphacommercehub_test')) {
 			$data['action'] = 'https://www.paypal.com/cgi-bin/webscr&pal=V4T754QB63XXL';
 		} else {
 			$data['action'] = 'https://www.sandbox.paypal.com/cgi-bin/webscr&pal=V4T754QB63XXL';
-		}
+		}*/
+				$data['action'] = 'https://hubuat.alphacommercehub.com.au/'.$this->config->get('payment_pp_alphacommercehub_url');
 
+		$data['merchant'] = $this->config->get('payment_pp_alphacommercehub_merchant');
 		$this->load->model('checkout/order');
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
-
+$amount = $order_info['total'] * 1000;
+$data['amount'] = round($amount);
 		if ($order_info) {
 			$data['business'] = $this->config->get('payment_pp_alphacommercehub_email');
 			$data['item_name'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
