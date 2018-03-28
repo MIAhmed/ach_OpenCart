@@ -9,6 +9,7 @@ class ControllerExtensionPaymentAlphacardPGS extends Controller {
 
 		$data['testmode'] = $this->config->get('payment_pp_standard_test');
 		$data['merchant'] = $this->config->get('payment_alphacard_pgs_merchant');
+	        $data['user'] = $this->config->get('payment_alphacard_pgs_user');
 		if ($this->config->get('payment_alphacard_pgs_3dsecure') == 1){
 			$secureval = 'N';
 			}
@@ -22,8 +23,8 @@ class ControllerExtensionPaymentAlphacardPGS extends Controller {
 		$this->load->model('checkout/order');
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
-$amount = $order_info['total'] * 1000;
-$data['amount'] = round($amount);
+$amount = round($order_info['total']) * 1000;
+$data['amount'] = $amount;
 		if ($order_info) {
 			$data['business'] = $this->config->get('payment_pp_standard_email');
 			$data['item_name'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
@@ -61,7 +62,15 @@ $data['amount'] = round($amount);
 					'weight'   => $product['weight']
 				);
 			}
-
+foreach($data['products'] as $pro){
+	$pro_name1[]=$pro['name'];
+	$pro_quantity1[]=$pro['quantity'];
+	}
+ $pro_quantity=array_sum($pro_quantity1);
+ $pro_name=str_replace(" ","",$pro_name1);
+ $data['pro_name']=$pro_name[0];
+$data['pro_quantity']=$pro_quantity;
+			
 			$data['discount_amount_cart'] = 0;
 
 			$total = $this->currency->format($order_info['total'] - $this->cart->getSubTotal(), $order_info['currency_code'], false, false);
@@ -89,6 +98,7 @@ $data['amount'] = round($amount);
 			$data['country'] = $order_info['payment_iso_code_2'];
 			$data['email'] = $order_info['email'];
 			$data['invoice'] = $this->session->data['order_id'] . ' - ' . html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8') . ' ' . html_entity_decode($order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
+			$data['merchanttxnid']=$this->session->data['order_id'];
 			$data['lc'] = $this->session->data['language'];
 			$data['return'] = $this->url->link('checkout/success');
 			$data['notify_url'] = $this->url->link('extension/payment/alphacard_pgs/callback', '', true);
