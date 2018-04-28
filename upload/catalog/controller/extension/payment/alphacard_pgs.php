@@ -17,8 +17,13 @@ class ControllerExtensionPaymentAlphacardPGS extends Controller {
 				$secureval = 'Y';
 				}
 		$data['secure'] = $secureval;
-		
+		if ($this->config->get('payment_alphacard_pgs_mode') == 1){
 		$data['action'] = 'https://hubuat.alphacommercehub.com.au/pp/'.$this->config->get('payment_alphacard_pgs_url');
+}
+else{
+		$data['action'] = 'https://hub.alphacommercehub.com.au/pp/'.$this->config->get('payment_alphacard_pgs_url');
+}
+		/*$data['action'] = 'https://hubuat.alphacommercehub.com.au/pp/'.$this->config->get('payment_alphacard_pgs_url');*/
 
 		$this->load->model('checkout/order');
 
