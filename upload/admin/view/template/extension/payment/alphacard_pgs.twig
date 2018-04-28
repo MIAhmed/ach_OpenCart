@@ -198,6 +198,20 @@
                     </select>
                   </div>
                 </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="select-status">{{ entry_mode}}</label>
+                  <div class="col-sm-10">
+                    <select name="payment_alphacard_pgs_mode" id="select-status" class="form-control">
+                      {% if payment_alphacard_pgs_mode %}
+                      <option value="1" selected="selected">UAT</option>
+                      <option value="0">Production</option>
+                      {% else %}
+                      <option value="1">UAT</option>
+                      <option value="0" selected="selected">Production</option>
+                      {% endif %}
+                    </select>
+                  </div>
+                </div>
                 <div class="form-group" style="display:none;">
                   <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
                   <div class="col-sm-10">
