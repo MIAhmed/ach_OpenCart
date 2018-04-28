@@ -80,6 +80,12 @@ class ControllerExtensionPaymentAlphacardPGS extends Controller {
             $data['payment_alphacard_pgs_approved_authorization_order_status_id'] = $this->config->get('payment_alphacard_pgs_approved_authorization_order_status_id');
         }
 
+	    if (isset($this->request->post['payment_alphacard_pgs_mode'])) {
+            $data['payment_alphacard_pgs_mode'] = $this->request->post['payment_alphacard_pgs_mode'];
+        } else {
+            $data['payment_alphacard_pgs_mode'] = $this->config->get('payment_alphacard_pgs_mode');
+        }
+	    
         if (isset($this->request->post['payment_alphacard_pgs_approved_capture_order_status_id'])) {
             $data['payment_alphacard_pgs_approved_capture_order_status_id'] = $this->request->post['payment_alphacard_pgs_approved_capture_order_status_id'];
         } else {
