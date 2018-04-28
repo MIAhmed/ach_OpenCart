@@ -102,6 +102,7 @@ $_['entry_display_name']                                    = 'Display Name';
 $_['entry_checkout']                                        = 'Tokenized Checkout Type';
 $_['entry_geo_zone']                                        = 'Geo Zone';
 $_['entry_status']                                          = 'Status';
+$_['entry_mode']                                          = 'Mode';
 $_['entry_3dsecure']                                          = '3DSecure';
 $_['entry_sort_order']                                      = 'Sort Order';
 $_['entry_gateway']                                         = 'Payment Gateway';
