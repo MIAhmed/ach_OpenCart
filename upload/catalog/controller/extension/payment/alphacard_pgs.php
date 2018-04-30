@@ -28,8 +28,8 @@ else{
 		$this->load->model('checkout/order');
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
-$amount = round($order_info['total']) * 1000;
-$data['amount'] = $amount;
+$amount = $order_info['total'] * 1000;
+$data['amount'] = round($amount);
 		if ($order_info) {
 			$data['business'] = $this->config->get('payment_pp_standard_email');
 			$data['item_name'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
