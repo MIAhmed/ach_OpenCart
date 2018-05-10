@@ -25,7 +25,7 @@
       </div>
       <div class="panel-body">
         <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-payment" class="form-horizontal">
-          <ul class="nav nav-tabs">
+          <ul class="nav nav-tabs" style="display:none;">
             <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
             <li><a href="#tab-status" data-toggle="tab">{{ tab_order_status }}</a></li>
           </ul>
@@ -58,7 +58,23 @@
                     <input type="text" name="payment_pp_alphacommercehub_user" value="{{ payment_pp_alphacommercehub_user }}" placeholder="{{ entry_userid }}" id="input-user" class="form-control" />
                   </div>
                 </div>
-              <div class="form-group">
+<div class="form-group">
+                  <label class="col-sm-2 control-label" for="select-mode">{{ entry_mode}}</label>
+                  <div class="col-sm-10">
+                    <select name="payment_pp_alphacommercehub_mode" id="select-mode" class="form-control">
+                      {% if payment_pp_alphacommercehub_mode %}
+                      <option value="1" selected="selected">UAT</option>
+                      <option value="0">Production</option>
+                      {% else %}
+                      <option value="1">UAT</option>
+                      <option value="0" selected="selected">Production</option>
+                      {% endif %}
+                    </select>
+                  </div>
+                </div>
+
+
+              <div class="form-group" style="display:none;">
                 <label class="col-sm-2 control-label" for="input-live-demo"><span data-toggle="tooltip" title="{{ help_test }}">{{ entry_test }}</span></label>
                 <div class="col-sm-10">
                   <select name="payment_pp_alphacommercehub_test" id="input-live-demo" class="form-control">
@@ -72,7 +88,7 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group" style="display:none;">
                 <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="{{ help_debug }}">{{ entry_debug }}</span></label>
                 <div class="col-sm-10">
                   <select name="payment_pp_alphacommercehub_debug" id="input-debug" class="form-control">
@@ -86,7 +102,7 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group" style="display:none;">
                 <label class="col-sm-2 control-label" for="input-transaction">{{ entry_transaction }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_alphacommercehub_transaction" id="input-transaction" class="form-control">
@@ -103,13 +119,13 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group" style="display:none;">
                 <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="{{ help_total }}">{{ entry_total }}</span></label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_pp_alphacommercehub_total" value="{{ payment_pp_alphacommercehub_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group" style="display:none;">
                 <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
                 <div class="col-sm-10">
                   <select name="payment_pp_alphacommercehub_geo_zone_id" id="input-geo-zone" class="form-control">
@@ -138,7 +154,7 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group" style="display:none;">
                 <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
                 <div class="col-sm-10">
                   <input type="text" name="payment_pp_alphacommercehub_sort_order" value="{{ payment_pp_alphacommercehub_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
