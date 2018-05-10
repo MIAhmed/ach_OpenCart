@@ -54,6 +54,8 @@
                     <input type="text" name="payment_alphacard_pgs_user" value="{{ payment_alphacard_pgs_user }}" placeholder="{{ entry_userid }}" id="input-user" class="form-control" />
                   </div>
                 </div>
+
+
                 <div class="form-group required" style="display:none;">
                   <label class="col-sm-2 control-label" for="input-integration-password"><span data-toggle="tooltip" title="{{ help_integration_password }}">{{ entry_integration_password }}</span></label>
                   <div class="col-sm-10">
@@ -198,20 +200,7 @@
                     </select>
                   </div>
                 </div>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label" for="select-status">{{ entry_mode}}</label>
-                  <div class="col-sm-10">
-                    <select name="payment_alphacard_pgs_mode" id="select-status" class="form-control">
-                      {% if payment_alphacard_pgs_mode %}
-                      <option value="1" selected="selected">UAT</option>
-                      <option value="0">Production</option>
-                      {% else %}
-                      <option value="1">UAT</option>
-                      <option value="0" selected="selected">Production</option>
-                      {% endif %}
-                    </select>
-                  </div>
-                </div>
+                
                 <div class="form-group" style="display:none;">
                   <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
                   <div class="col-sm-10">
@@ -805,6 +794,20 @@
                     <input type="text" name="payment_alphacard_pgs_user" value="{{ payment_alphacard_pgs_user }}" placeholder="{{ entry_userid }}" id="input-user" class="form-control" />
                   </div>
                 </div>
+<div class="form-group">
+                  <label class="col-sm-2 control-label" for="select-status">{{ entry_mode}}</label>
+                  <div class="col-sm-10">
+                    <select name="payment_alphacard_pgs_mode" id="select-status" class="form-control">
+                      {% if payment_alphacard_pgs_mode %}
+                      <option value="1" selected="selected">UAT</option>
+                      <option value="0">Production</option>
+                      {% else %}
+                      <option value="1">UAT</option>
+                      <option value="0" selected="selected">Production</option>
+                      {% endif %}
+                    </select>
+                  </div>
+                </div>
               <div class="text-right form-control-static" style="display:none;">
                 <a class="btn btn-warning" data-toggle="tooltip" data-original-title="{{ text_refresh }}" id="refresh_transactions"><i class="fa fa-refresh"></i>&nbsp;{{ button_refresh }}</a>
               </div>
@@ -847,11 +850,9 @@ $(document).ready(function() {
       },
       success : function(data) {
         var html = '';
-
         if (data.transactions.length) {
           for (var i in data.transactions) {
             var row = data.transactions[i];
-
             html += '<tr>';
             html += '<td class="text-left hidden-xs">' + row.merchant + '</td>';
             html += '<td class="text-left"><a target="_blank" href="' + row.url_order + '">' + row.order_id + '</td>';
@@ -868,7 +869,6 @@ $(document).ready(function() {
           html += '<td class="text-center" colspan="8">{{ text_no_transactions }}</td>';
           html += '</tr>';
         }
-
         $('#transactions').html(html);
         
         $('#transactions_pagination').html(data.pagination).find('a[href]').each(function(index,element) {
@@ -883,18 +883,14 @@ $(document).ready(function() {
       }
     });
   }
-
   $('#refresh_transactions').click(function(e) {
     e.preventDefault();
     list_transactions();
   }).trigger('click');
-
   $('.nav-tabs a[href="#{{ tab }}"]').tab('show');
-
   $('.text-danger').each(function() {
     $(this).closest('.form-group').addClass('has-error');
   });
-
   $('#select-gateway').change(function() {
     if ($(this).val() == 'other') {
       $('#gateway_other').show();
@@ -903,11 +899,9 @@ $(document).ready(function() {
       $(this).closest('.form-group').removeClass('has-error');
     }
   }).trigger('change');
-
   $('.show_hide_credential').click(function(e) {
     e.preventDefault();
     var input = $(this).closest('.input-group').find('input');
-
     if ($(input).attr('type') == 'text') {
       $(input).attr('type', 'password');
     } else {
