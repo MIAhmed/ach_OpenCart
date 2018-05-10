@@ -2,35 +2,33 @@
 class ControllerExtensionPaymentPPAlphacommercehub extends Controller {
 	public function index() {
 		$this->load->language('extension/payment/pp_alphacommercehub');
-
 		$data['text_testmode'] = $this->language->get('text_testmode');
 		$data['button_confirm'] = $this->language->get('button_confirm');
-
 		$data['testmode'] = $this->config->get('payment_pp_alphacommercehub_test');
-
 		/*if (!$this->config->get('payment_pp_alphacommercehub_test')) {
 			$data['action'] = 'https://www.paypal.com/cgi-bin/webscr&pal=V4T754QB63XXL';
 		} else {
 			$data['action'] = 'https://www.sandbox.paypal.com/cgi-bin/webscr&pal=V4T754QB63XXL';
 		}*/
-				$data['action'] = 'https://hubuat.alphacommercehub.com.au/pp/'.$this->config->get('payment_pp_alphacommercehub_url');
-
+				
+if ($this->config->get('payment_pp_alphacommercehub_mode') == 1){
+$data['action'] = 'https://hubuat.alphacommercehub.com.au/pp/'.$this->config->get('payment_pp_alphacommercehub_url');
+}
+elseif ($this->config->get('payment_pp_alphacommercehub_mode') == 0){
+$data['action'] = 'https://hub.alphacommercehub.com.au/pp/'.$this->config->get('payment_pp_alphacommercehub_url');
+}
 		$data['merchant'] = $this->config->get('payment_pp_alphacommercehub_merchant');
 $data['user'] = $this->config->get('payment_pp_alphacommercehub_user');
 		$this->load->model('checkout/order');
-
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 $amount = $order_info['total'] * 1000;
 $data['amount'] = round($amount);
 		if ($order_info) {
 			$data['business'] = $this->config->get('payment_pp_alphacommercehub_email');
 			$data['item_name'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
-
 			$data['products'] = array();
-
 			foreach ($this->cart->getProducts() as $product) {
 				$option_data = array();
-
 				foreach ($product['option'] as $option) {
 					if ($option['type'] != 'file') {
 						$value = $option['value'];
@@ -43,13 +41,11 @@ $data['amount'] = round($amount);
 							$value = '';
 						}
 					}
-
 					$option_data[] = array(
 						'name'  => $option['name'],
 						'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
 					);
 				}
-
 				$data['products'][] = array(
 					'name'     => htmlspecialchars($product['name']),
 					'model'    => htmlspecialchars($product['model']),
@@ -59,11 +55,8 @@ $data['amount'] = round($amount);
 					'weight'   => $product['weight']
 				);
 			}
-
 			$data['discount_amount_cart'] = 0;
-
 			$total = $this->currency->format($order_info['total'] - $this->cart->getSubTotal(), $order_info['currency_code'], false, false);
-
 			if ($total > 0) {
 				$data['products'][] = array(
 					'name'     => $this->language->get('text_total'),
@@ -76,7 +69,6 @@ $data['amount'] = round($amount);
 			} else {
 				$data['discount_amount_cart'] -= $total;
 			}
-
 			$data['currency_code'] = $order_info['currency_code'];
 			$data['first_name'] = html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8');
 			$data['last_name'] = html_entity_decode($order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
@@ -92,15 +84,12 @@ $data['merchanttxnid']=$this->session->data['order_id'];
 			$data['return'] = $this->url->link('checkout/success');
 			$data['notify_url'] = $this->url->link('extension/payment/pp_alphacommercehub/callback', '', true);
 			$data['cancel_return'] = $this->url->link('checkout/checkout', '', true);
-
 			if (!$this->config->get('payment_pp_alphacommercehub_transaction')) {
 				$data['paymentaction'] = 'authorization';
 			} else {
 				$data['paymentaction'] = 'sale';
 			}
-
 			$data['custom'] = $this->session->data['order_id'];
-
 			return $this->load->view('extension/payment/pp_alphacommercehub', $data);
 		}
 	}
@@ -110,7 +99,6 @@ print_r($_POST['data']);
 		$order_id=$posteddata->Result->MerchantTxnID;
 		$order_id=$posteddata->Result->MerchantTxnID;
 		$this->load->model('checkout/order');
-
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 		if($order_info){
 		if($posteddata->MethodResult->Status == 0){
@@ -133,54 +121,41 @@ $this->model_checkout_order->addOrderHistory($order_id,$status);
 		} else {
 			$order_id = 0;
 		}
-
 		$this->load->model('checkout/order');
-
 		$order_info = $this->model_checkout_order->getOrder($order_id);
-
 		if ($order_info) {
 			$request = 'cmd=_notify-validate';
-
 			foreach ($this->request->post as $key => $value) {
 				$request .= '&' . $key . '=' . urlencode(html_entity_decode($value, ENT_QUOTES, 'UTF-8'));
 			}
-
 			if (!$this->config->get('payment_pp_alphacommercehub_test')) {
 				$curl = curl_init('https://www.paypal.com/cgi-bin/webscr');
 			} else {
 				$curl = curl_init('https://www.sandbox.paypal.com/cgi-bin/webscr');
 			}
-
 			curl_setopt($curl, CURLOPT_POST, true);
 			curl_setopt($curl, CURLOPT_POSTFIELDS, $request);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($curl, CURLOPT_HEADER, false);
 			curl_setopt($curl, CURLOPT_TIMEOUT, 30);
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-
 			$response = curl_exec($curl);
-
 			if (!$response) {
 				$this->log->write('PP_ALPHACOMMERCEHUB :: CURL failed ' . curl_error($curl) . '(' . curl_errno($curl) . ')');
 			}
-
 			if ($this->config->get('payment_pp_alphacommercehub_debug')) {
 				$this->log->write('PP_ALPHACOMMERCEHUB :: IPN REQUEST: ' . $request);
 				$this->log->write('PP_ALPHACOMMERCEHUB :: IPN RESPONSE: ' . $response);
 			}
-
 			if ((strcmp($response, 'VERIFIED') == 0 || strcmp($response, 'UNVERIFIED') == 0) && isset($this->request->post['payment_status'])) {
 				$order_status_id = $this->config->get('config_order_status_id');
-
 				switch($this->request->post['payment_status']) {
 					case 'Canceled_Reversal':
 						$order_status_id = $this->config->get('payment_pp_alphacommercehub_canceled_reversal_status_id');
 						break;
 					case 'Completed':
 						$receiver_match = (strtolower($this->request->post['receiver_email']) == strtolower($this->config->get('payment_pp_alphacommercehub_email')));
-
 						$total_paid_match = ((float)$this->request->post['mc_gross'] == $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false));
-
 						if ($receiver_match && $total_paid_match) {
 							$order_status_id = $this->config->get('payment_pp_alphacommercehub_completed_status_id');
 						}
@@ -218,12 +193,10 @@ $this->model_checkout_order->addOrderHistory($order_id,$status);
 						$order_status_id = $this->config->get('payment_pp_alphacommercehub_voided_status_id');
 						break;
 				}
-
 				$this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
 			} else {
 				$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('config_order_status_id'));
 			}
-
 			curl_close($curl);
 		}
 	}
