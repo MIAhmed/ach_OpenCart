@@ -103,7 +103,7 @@ $data['pro_quantity']=$pro_quantity;
 			$data['country'] = $order_info['payment_iso_code_2'];
 			$data['email'] = $order_info['email'];
 			$data['invoice'] = $this->session->data['order_id'] . ' - ' . html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8') . ' ' . html_entity_decode($order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
-			$data['merchanttxnid']=$this->session->data['order_id'];
+			$data['merchanttxnid']=$this->session->data['order_id'].'003';
 			$data['lc'] = $this->session->data['language'];
 			$data['return'] = $this->url->link('checkout/success');
 			$data['notify_url'] = $this->url->link('extension/payment/alphacard_pgs/callback', '', true);
@@ -125,6 +125,7 @@ $data['pro_quantity']=$pro_quantity;
 		$posteddata=json_decode($_POST['data']);
 		$order_id=$posteddata->Result->MerchantTxnID;
 		$order_id=$posteddata->Result->MerchantTxnID;
+		$order_id=str_replace('003','',$order_id);
 		$this->load->model('checkout/order');
 
 		$order_info = $this->model_checkout_order->getOrder($order_id);
