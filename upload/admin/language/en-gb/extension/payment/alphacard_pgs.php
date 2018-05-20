@@ -1,7 +1,7 @@
 <?php
 
 // Heading
-$_['heading_title']                                         = 'alpha Payment Gateway Services';
+$_['heading_title']                                         = 'Alpha Payment Gateway Services';
 $_['heading_title_transaction']                             = 'View Transaction #%s';
 
 // Help
