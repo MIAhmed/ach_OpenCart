@@ -67,14 +67,19 @@ $data['amount'] = $amount;
 					'weight'   => $product['weight']
 				);
 			}
-foreach($data['products'] as $pro){
-	$pro_name1[]=$pro['name'];
-	$pro_quantity1[]=$pro['quantity'];
-	}
- $pro_quantity=array_sum($pro_quantity1);
- $pro_name=str_replace(" ","",$pro_name1);
- $data['pro_name']=$pro_name[0];
-$data['pro_quantity']=$pro_quantity;
+	foreach($data['products'] as $pro){
+		$pro_name1[]=$pro['name'];
+		$pro_quantity1[]=$pro['quantity'];
+		$pro_price1[]=$pro['price'];
+		}
+		
+	$pro_quantity=array_sum($pro_quantity1);
+	$pro_name=str_replace(" ","",$pro_name1);
+	$data['pro_name']=$pro_name[0];
+	$data['pro_quantity']=$pro_quantity;
+	$data['pro_price']=$pro_price1[0];
+	if( $data['pro_price'] !=null)
+		$data['pro_price'] = $data['pro_price'] * 1000; 
 			
 			$data['discount_amount_cart'] = 0;
 
